@@ -30,7 +30,9 @@ class Repository {
     }
 
     for (var cache in caches) {
-      cache.addItem(item);
+      if (cache != (source as Cache)) {
+        cache.addItem(item);
+      }
     }
 
     return item;
