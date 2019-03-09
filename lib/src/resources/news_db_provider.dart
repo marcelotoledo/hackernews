@@ -15,11 +15,11 @@ class NewsDbProvider implements Source, Cache {
 
   void init() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, 'items.db');
+    final path = join(documentsDirectory.path, 'items0.db');
     db = await openDatabase(
       path,
       version: 1,
-      onCreate: (Database newDb, int Version) {
+      onCreate: (Database newDb, int version) {
         newDb.execute("""
           CREATE TABLE items (
             id INTEGER PRIMARY KEY,
