@@ -24,7 +24,6 @@ dependencies:
   sqflite: ^1.1.1
   path_provider: ^0.5.0+1
   http: ^0.12.0+1
-  html_unescape: ^1.0.1+2
   html: 0.13.4+1
 
 dev_dependencies:
