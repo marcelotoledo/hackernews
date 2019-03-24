@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/item_model.dart';
+import 'package:html_unescape/html_unescape.dart';
+import 'package:html/parser.dart' show parse;
 
 class Comment extends StatelessWidget {
   final int itemId;
@@ -19,7 +21,7 @@ class Comment extends StatelessWidget {
       final item = snapshot.data;
       final children = <Widget> [
         ListTile(
-          title: Text(item.text),
+          title: buildText(item),
           subtitle: item.by == '' ? Text('This comment has been deleted by the moderator.') : Text(item.by),
           contentPadding: EdgeInsets.only(
             right: 16.0,
@@ -37,5 +39,18 @@ class Comment extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget buildText(ItemModel item) {
+    final htmlStr = item.text.replaceAll('<p>', '\n\n');
+    final cleanStr = _parseHtmlString(htmlStr);
+
+    return Text(cleanStr);
+  }
+
+  String _parseHtmlString(String htmlString) {
+    var document = parse(htmlString);
+    String parsedString = parse(document.body.text).documentElement.text;
+    return parsedString;
   }
 }
