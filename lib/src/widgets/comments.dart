@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/item_model.dart';
-import 'package:html_unescape/html_unescape.dart';
 import 'package:html/parser.dart' show parse;
+import 'loading_container.dart';
 
 class Comment extends StatelessWidget {
   final int itemId;
@@ -15,7 +15,7 @@ class Comment extends StatelessWidget {
       future: itemMap[itemId],
       builder: (context, AsyncSnapshot<ItemModel> snapshot) {
         if (!snapshot.hasData) {
-          return Text('Still loading comment');
+          return LoadingContainer();
         }
 
       final item = snapshot.data;
@@ -49,8 +49,9 @@ class Comment extends StatelessWidget {
   }
 
   String _parseHtmlString(String htmlString) {
-    var document = parse(htmlString);
-    String parsedString = parse(document.body.text).documentElement.text;
+    final document = parse(htmlString);
+    final parsedString = parse(document.body.text).documentElement.text;
+
     return parsedString;
   }
 }
